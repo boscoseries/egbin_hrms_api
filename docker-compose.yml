@@ -1,0 +1,47 @@
+version: "3.8"
+
+services:
+  api:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    # env_file:
+    #   - ./.env
+    depends_on:
+      - db
+
+  # ngrok:
+  #   image: shkoliar/ngrok:latest
+  #   ports:
+  #     - 4551:4551
+  #   links:
+  #     - web
+  #   environment:
+  #     - DOMAIN=web
+  #     - PORT=8000
+  #   depends_on:
+  #     - web
+
+  # redis:
+  #   image: redis:alpine
+  #   # build:
+  #   #   context: .
+  #   #   dockerfile: docker/redis/Dockerfile
+  #   ports:
+  #     - 6379:6379
+
+  db:
+    image: postgres:13.1-alpine
+    restart: always
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    env_file:
+      - ./.env
+    ports:
+      - 5432:5432 # HOST:CONTAINER
+
+volumes:
+  postgres_data:

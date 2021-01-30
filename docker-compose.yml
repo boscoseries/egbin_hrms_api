@@ -8,30 +8,10 @@ services:
       - .:/app
     ports:
       - "8000:8000"
-    # env_file:
-    #   - ./.env
+    env_file:
+      - ./.env
     depends_on:
       - db
-
-  # ngrok:
-  #   image: shkoliar/ngrok:latest
-  #   ports:
-  #     - 4551:4551
-  #   links:
-  #     - web
-  #   environment:
-  #     - DOMAIN=web
-  #     - PORT=8000
-  #   depends_on:
-  #     - web
-
-  # redis:
-  #   image: redis:alpine
-  #   # build:
-  #   #   context: .
-  #   #   dockerfile: docker/redis/Dockerfile
-  #   ports:
-  #     - 6379:6379
 
   db:
     image: postgres:13.1-alpine

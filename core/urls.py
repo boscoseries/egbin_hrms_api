@@ -46,4 +46,6 @@ urlpatterns = [
         name='schema-redoc'),
     path('api-auth/', include('rest_framework.urls')),
     path('admin/', admin.site.urls),
+    path('employees/', include('employee.urls')),
+    path('leave/', include('leave.urls')),
 ]

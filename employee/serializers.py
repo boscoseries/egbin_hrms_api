@@ -1,3 +1,4 @@
+from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from .models import Staff
 
@@ -14,6 +15,23 @@ class StaffSerializer(serializers.ModelSerializer):
     class Meta:
         model = Staff
         exclude = ("user_permissions", "groups")
+
+
+class PasswordResetSerializer(serializers.Serializer):
+    """Serializer for password reset"""
+    staff_id = serializers.CharField()
+    new_password = serializers.CharField()
+
+    def create(self, validated_data):
+        password = validated_data.get('new_password')
+        staff = Staff.objects.filter(
+            staff_id=validated_data.get('staff_id', None)).first()
+        if staff:
+            staff.set_password(password)
+            staff.save()
+            return staff
+        raise Exception("No staff with supplied ID")
+
 
 class CustomObtainTokenPairSerializer(TokenObtainPairSerializer):
     default_error_messages = {'invalid': 'Password does not match.'}

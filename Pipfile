@@ -1,0 +1,5 @@
+dj-database-url = "*"
+dj-database-url = "*"
+whitenoise = "*"
+whitenoise = "*"
+gunicorn = "*"

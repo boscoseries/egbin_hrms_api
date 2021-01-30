@@ -25,7 +25,7 @@ SECRET_KEY = 'n&(cmjkc-yl4of$u03!iaxjkp2&(*%4e6hk+&265k)tc)y_!(c'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 1)
 
-ALLOWED_HOSTS = ["127.0.0.1", 'localhost']
+ALLOWED_HOSTS = ["127.0.0.1", 'localhost', 'https://egbin-api.herokuapp.com']
 
 # Application definition
 
@@ -167,6 +167,11 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 STATIC_TMP = os.path.join(BASE_DIR, 'static')
 os.makedirs(STATIC_TMP, exist_ok=True)
 os.makedirs(STATIC_ROOT, exist_ok=True)
+
+# Configure Django App for Heroku.
+import django_heroku
+django_heroku.settings(locals())

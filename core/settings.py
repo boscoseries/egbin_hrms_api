@@ -79,21 +79,21 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'NAME': os.environ.get("POSTGRES_DB",
-                               os.path.join(BASE_DIR, 'db.sqlite3')),
-        'USER': os.environ.get("POSTGRES_USER", 'user'),
-        'ENGINE': os.environ.get("SQL_ENGINE", 'django.db.backends.sqlite3'),
-        'PASSWORD': os.environ.get("POSTGRES_PASSWORD", 'password'),
-        'HOST': os.environ.get("SQL_HOST", 'localhost'),
-        'PORT': os.environ.get("SQL_PORT", 5432),
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'NAME': os.environ.get("POSTGRES_DB",
+#                                os.path.join(BASE_DIR, 'db.sqlite3')),
+#         'USER': os.environ.get("POSTGRES_USER", 'user'),
+#         'ENGINE': os.environ.get("SQL_ENGINE", 'django.db.backends.sqlite3'),
+#         'PASSWORD': os.environ.get("POSTGRES_PASSWORD", 'password'),
+#         'HOST': os.environ.get("SQL_HOST", 'localhost'),
+#         'PORT': os.environ.get("SQL_PORT", 5432),
+#     }
+# }
 
-# import dj_database_url
-# db_from_env = dj_database_url.config(conn_max_age=600, ssl_require=True)
-# DATABASES['default'].update(db_from_env)
+import dj_database_url
+db_from_env = dj_database_url.config(conn_max_age=600, ssl_require=True)
+DATABASES['default'].update(db_from_env)
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS':

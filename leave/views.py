@@ -19,12 +19,13 @@ class LeaveViewsets(viewsets.ModelViewSet):
     search_fields = ['staff__id', 'staff__lastname', 'staff__firstname']
 
     def get_queryset(self):
-        user = self.request.user
-        if user.role == 'STAFF':
-            return self.queryset.filter(staff=user)
-        if user.role == 'MANAGER':
-            return self.queryset.filter(staff__line_manager=user)
-        return super().get_queryset()
+        if self.request.user.is_authenticated:
+            user = self.request.user
+            if user.role == 'STAFF':
+                return self.queryset.filter(staff=user)
+            if user.role == 'MANAGER':
+                return self.queryset.filter(staff__line_manager=user)
+            return super().get_queryset()
 
     def get_permission(self):
         permission_classes = super().get_permissions()

@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'n&(cmjkc-yl4of$u03!iaxjkp2&(*%4e6hk+&265k)tc)y_!(c'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG', 1)
+DEBUG = os.environ.get('DEBUG', 0)
 
-ALLOWED_HOSTS = ["127.0.0.1", 'localhost', 'https://egbin-api.herokuapp.com']
+ALLOWED_HOSTS = ["127.0.0.1", 'localhost', 'egbin-api.herokuapp.com']
 
 # Application definition
 

@@ -10,7 +10,7 @@ router = DefaultRouter()
 router.register('', StaffViewsets)
 
 urlpatterns = [
-    path('token/', CustomObtainTokenPairView.as_view(), name='signin'),
+    path('login/', CustomObtainTokenPairView.as_view(), name='signin'),
     path('token/refresh/', TokenRefreshView.as_view(), name='refresh-token'),
     path('token/verify/', TokenVerifyView.as_view(), name='verify-token'),
 ]

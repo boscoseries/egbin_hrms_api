@@ -29,8 +29,9 @@ def default_type():
 class Leave(models.Model):
     id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
     staff = models.ForeignKey(Staff,
-                              on_delete=models.CASCADE,
-                              related_name='staff_leaves')
+                              on_delete=models.SET_NULL,
+                              related_name='staff_leaves',
+                              null=True)
     type = models.CharField(max_length=20,
                             choices=LEAVE_TYPES,
                             default=default_type)
@@ -47,7 +48,7 @@ class Leave(models.Model):
     duration = models.IntegerField(null=True)
     description = models.TextField(null=True)
     manager_note = models.TextField(null=True)
-    status_updated_at = models.DateTimeField()
+    status_updated_at = models.DateTimeField(null=True)
     created_at = models.DateTimeField(auto_now=True)
     updated_at = models.DateTimeField(auto_now_add=True)
 

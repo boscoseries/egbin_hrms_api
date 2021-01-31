@@ -19,17 +19,9 @@ class LeaveSerializer(serializers.ModelSerializer):
         model = Leave
         exclude = ("updated_at", )
 
-    def validate(self, attrs):
-        user = self.context['request'].user
-        type = attrs.get('type')
-        duration = attrs.get('duration')
-        if type == "annual_leave" and duration >= 14:
-            raise serializers.ValidationError(
-                "Please input a duration below 14 days")
-        if int(duration) > getattr(user, type):
-            raise serializers.ValidationError(
-                "you requested more than your available days")
-        return super().validate(attrs)
+    def create(self, validated_data):
+        validated_data['staff'] = self.context['request'].user
+        return super().create(validated_data)
 
 
 class LeaveUpdateSerializer(serializers.ModelSerializer):

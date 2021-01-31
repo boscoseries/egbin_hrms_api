@@ -40,7 +40,7 @@ class Staff(AbstractBaseUser, PermissionsMixin):
     staff_id = models.CharField(max_length=255, unique=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
-    password = models.CharField(max_length=255)
+    password = models.CharField(max_length=255, default="password")
     line_manager = models.ForeignKey('self',
                                      related_name='staff_line_manager',
                                      on_delete=models.SET_NULL,

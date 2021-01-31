@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework.authentication import authenticate
 from .models import Staff
 
 
@@ -37,11 +38,13 @@ class CustomObtainTokenPairSerializer(TokenObtainPairSerializer):
     default_error_messages = {'invalid': 'Password does not match.'}
 
     def validate(self, attrs):
-        data = super().validate(attrs)
+        super().validate(attrs)
+        serializer = StaffListSerializer(authenticate(**attrs))
+        data = serializer.data
         refresh = self.get_token(self.user)
         data["refresh"] = str(refresh)
         data["access"] = str(refresh.access_token)
-        return data
+        return {"result": data}
 
     @classmethod
     def get_token(cls, user):
@@ -51,5 +54,9 @@ class CustomObtainTokenPairSerializer(TokenObtainPairSerializer):
         token['role'] = user.role
         token['firstname'] = user.firstname
         token['lastname'] = user.lastname
-        token['staff_id'] = user.staff_id
+        token['annual_leave'] = user.annual_leave
+        token['sick_leave'] = user.sick_leave
+        token['compassionate_leave'] = user.compassionate_leave
+        token['exam_leave'] = user.exam_leave
+        token['line_manager'] = user.line_manager
         return token

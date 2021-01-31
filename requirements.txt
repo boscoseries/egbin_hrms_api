@@ -8,6 +8,7 @@ Django==3.0.4
 django-on-heroku==1.1.2
 djangorestframework==3.11.0
 djangorestframework-simplejwt==4.4.0
+django-cors-headers==3.2.1
 drf-yasg==1.17.1
 gunicorn==20.0.4
 idna==2.10
@@ -18,7 +19,7 @@ Markdown==3.3.3
 MarkupSafe==1.1.1
 packaging==20.8
 psycopg2-binary==2.8.6
-PyJWT==2.0.1
+PyJWT==1.7.1
 pyparsing==2.4.7
 pytz==2020.5
 requests==2.25.0

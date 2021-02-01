@@ -4,24 +4,28 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenObtainPairView
 from .serializers import (StaffSerializer, CustomObtainTokenPairSerializer,
-                          PasswordResetSerializer)
-from .models import Staff
+                          PasswordResetSerializer, UserListSerializer)
+from .models import User
 from .permissions import IsAdmin
 
 
 # Create your views here.
 class StaffViewsets(viewsets.ModelViewSet):
-    queryset = Staff.objects.all()
+    queryset = User.objects.all()
     serializer_class = StaffSerializer
     http_method_names = ['get', 'post', 'patch', 'delete']
     filter_backends = [filters.SearchFilter]
     search_fields = ['firstname', 'lastname', 'staff_id']
 
+    def get_serializer_class(self):
+        if self.action in ['list', 'retrieve']:
+            return UserListSerializer
+
     def get_permissions(self):
         permission_classes = [permissions.AllowAny]
-        if self.action in ['retrieve']:
+        if self.action in ['retrieve', 'list']:
             permission_classes = [permissions.IsAuthenticated]
-        if self.action in ['list', 'update', 'partial_update', 'delete']:
+        if self.action in ['update', 'partial_update', 'delete']:
             permission_classes = [permissions.IsAuthenticated, IsAdmin]
         return [permission() for permission in permission_classes]
 

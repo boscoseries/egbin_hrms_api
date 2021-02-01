@@ -1,6 +1,6 @@
 from datetime import datetime
 from django.db import models
-from employee.models import Staff
+from employee.models import User
 import uuid
 
 LEAVE_TYPES = (
@@ -28,7 +28,7 @@ def default_type():
 # Create your models here.
 class Leave(models.Model):
     id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
-    staff = models.ForeignKey(Staff,
+    staff = models.ForeignKey(User,
                               on_delete=models.SET_NULL,
                               related_name='staff_leaves',
                               null=True)
@@ -38,7 +38,7 @@ class Leave(models.Model):
     status = models.CharField(max_length=20,
                               choices=LEAVE_STATUS,
                               default=default_status)
-    relieve_staff = models.ForeignKey(Staff,
+    relieve_staff = models.ForeignKey(User,
                                       on_delete=models.SET_NULL,
                                       related_name="leave_relieve_staff",
                                       null=True)

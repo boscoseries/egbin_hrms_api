@@ -58,7 +58,7 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'core.urls'
 
 # CUSTOM USER MODEL
-AUTH_USER_MODEL = "employee.Staff"
+AUTH_USER_MODEL = "employee.User"
 
 TEMPLATES = [
     {
@@ -94,9 +94,10 @@ DATABASES = {
     }
 }
 
-# import dj_database_url
-# db_from_env = dj_database_url.config(conn_max_age=600, ssl_require=True)
-# DATABASES['default'].update(db_from_env)
+import dj_database_url
+db_from_env = dj_database_url.config(conn_max_age=600, ssl_require=True)
+DATABASES['default'].update(db_from_env)
+
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS':
@@ -124,7 +125,7 @@ SIMPLE_JWT = {
     'ISSUER': None,
     'AUTH_HEADER_TYPES': ('Bearer', ),
     'USER_ID_FIELD': 'id',
-    'USER_ID_CLAIM': 'staff_id',
+    'USER_ID_CLAIM': 'user_id',
     'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken', ),
     'TOKEN_TYPE_CLAIM': 'token_type',
     'JTI_CLAIM': 'jti',

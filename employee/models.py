@@ -32,7 +32,7 @@ def default_role():
 
 
 # Create your models here.
-class Staff(AbstractBaseUser, PermissionsMixin):
+class User(AbstractBaseUser, PermissionsMixin):
     id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
     firstname = models.CharField(max_length=255)
     lastname = models.CharField(max_length=255)

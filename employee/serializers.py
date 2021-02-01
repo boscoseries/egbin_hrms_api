@@ -1,20 +1,26 @@
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework.authentication import authenticate
-from .models import Staff
+from .models import User
 
 
 class StaffListSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Staff
+        model = User
         fields = ("firstname", "lastname", "middlename", "staff_id", "role")
 
 
 class StaffSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        exclude = ("user_permissions", "groups")
+
+
+class UserListSerializer(serializers.ModelSerializer):
     line_manager = StaffListSerializer()
 
     class Meta:
-        model = Staff
+        model = User
         exclude = ("user_permissions", "groups")
 
 
@@ -25,7 +31,7 @@ class PasswordResetSerializer(serializers.Serializer):
 
     def create(self, validated_data):
         password = validated_data.get('new_password')
-        staff = Staff.objects.filter(
+        staff = User.objects.filter(
             staff_id=validated_data.get('staff_id', None)).first()
         if staff:
             staff.set_password(password)
@@ -35,7 +41,7 @@ class PasswordResetSerializer(serializers.Serializer):
 
 
 class CustomObtainTokenPairSerializer(TokenObtainPairSerializer):
-    default_error_messages = {'invalid': 'Password does not match.'}
+    default_error_messages = {'no_active_account': 'Password does not match.'}
 
     def validate(self, attrs):
         super().validate(attrs)
@@ -58,5 +64,4 @@ class CustomObtainTokenPairSerializer(TokenObtainPairSerializer):
         token['sick_leave'] = user.sick_leave
         token['compassionate_leave'] = user.compassionate_leave
         token['exam_leave'] = user.exam_leave
-        token['line_manager'] = user.line_manager
         return token

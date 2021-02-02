@@ -20,6 +20,7 @@ class StaffViewsets(viewsets.ModelViewSet):
     def get_serializer_class(self):
         if self.action in ['list', 'retrieve']:
             return UserListSerializer
+        return super().get_serializer_class()
 
     def get_permissions(self):
         permission_classes = [permissions.AllowAny]

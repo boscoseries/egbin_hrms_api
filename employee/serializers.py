@@ -7,7 +7,8 @@ from .models import User
 class StaffListSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ("firstname", "lastname", "middlename", "staff_id", "role")
+        fields = ("id", "firstname", "lastname", "middlename", "staff_id",
+                  "role")
 
 
 class StaffSerializer(serializers.ModelSerializer):
